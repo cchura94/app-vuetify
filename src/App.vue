@@ -1,32 +1,37 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+
+    <Menu v-if="!$route.meta.requiresAuth"></Menu>
+    <MenuAdmin v-if="$route.meta.requiresAuth">MENU DE ADMIN</MenuAdmin>
+
+    <v-content>
+      <router-view></router-view>       
+    </v-content>
+
+    <Foot></Foot>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import HelloWorld from './components/HelloWorld';
+import NavBar from './components/NavBar'
+import Menu from './components/navegacion/Menu'
+import Foot from './components/navegacion/Foot'
+import MenuAdmin from './components/navegacion/MenuAdmin'
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: 'App',
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  components: {
+    HelloWorld,
+    NavBar,
+    Menu,
+    Foot,
+    MenuAdmin
+  },
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    //
+  }),
+};
+</script>
