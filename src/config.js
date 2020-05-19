@@ -21,3 +21,13 @@ export const verificaLogin = function(){
       return false;
     }
 }
+
+export const getHeader = function(){
+  const auth = JSON.parse(atob(localStorage.getItem('authUser')))
+
+  const headers = {
+      'Accept': 'application/json',
+      'Authorization': 'bearer '+auth.access_token
+  }
+  return headers;
+}

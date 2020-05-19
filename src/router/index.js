@@ -47,7 +47,7 @@ Vue.use(VueRouter)
     path: '/publicacion',
     name: 'Publicacion',
     component: Publicacion,
-    beforeEnter: guardAdmin
+    //beforeEnter: guardAdmin
   },
   {
     path: '/contacto',
