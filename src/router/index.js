@@ -8,6 +8,8 @@ import Login from '../views/Login.vue'
 import Admin from '../views/admin/Admin.vue'
 import Establecimiento from '../views/admin/Establecimiento'
 import Servicio from '../views/admin/Servicio'
+import ServiciosEstablecimiento from '../components/admin/establecimiento/ServiciosEstablecimiento'
+import ServicioEstablecimiento from '../components/admin/servicio/ServicioEstablecimiento'
 
 function guardAdmin(to, from, next){
   try {
@@ -72,6 +74,14 @@ Vue.use(VueRouter)
         component: Establecimiento,
         meta: { requiresAuth: true },
         beforeEnter: guardAdmin,
+        children: [
+          {
+            path: ':id/servicios',
+            component: ServiciosEstablecimiento,
+            meta: { requiresAuth: true },
+            beforeEnter: guardAdmin,
+          }
+        ]
       },
       {
         path: 'servicios',
@@ -79,6 +89,15 @@ Vue.use(VueRouter)
         component: Servicio,
         meta: { requiresAuth: true },
         beforeEnter: guardAdmin,
+        children: [
+          {
+            path: ':id',
+            name: 'ServicioEstablecimientos',
+            component: ServicioEstablecimiento,
+            meta: { requiresAuth: true },
+            beforeEnter: guardAdmin,
+          }
+        ]
       }
     ]
   }

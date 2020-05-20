@@ -1,16 +1,9 @@
 <template>
-  <div>
-    <h1>SERVICIOS</h1>
-
-    <router-view></router-view>
-
-  </div>
-  
+  <h1>Lista de Servicios</h1>
 </template>
 
 <script>
 export default {
-  
 
 }
 </script>

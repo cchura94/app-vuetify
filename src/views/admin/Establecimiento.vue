@@ -52,6 +52,15 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
+
+      <v-btn
+        small
+        class="mr-2"
+        :to="'/admin/servicios/'+item.id"
+      >
+        servicios
+      </v-btn>
+
       <v-icon
         small
         class="mr-2"
@@ -72,6 +81,8 @@
 
     
   </v-data-table>
+
+  <router-view></router-view>
 
 </div>
 
@@ -145,89 +156,25 @@ data: () => ({
 
     methods: {
       initialize () {
-        this.establecimientos = [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-          },
-        ]
+        
       },
 
       editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
+        this.editedIndex = this.establecimientos.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
       deleteItem (item) {
-        const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+        const index = this.establecimientos.indexOf(item)
+        if(confirm('¿Esta seguro de eliminar el registro?')){
+
+          axios.delete(urlbase+"establecimiento/"+item.id, {headers: getHeader()})
+              .then((res) => {
+                console.log(res);
+                this.establecimientos.splice(index, 1)
+              })          
+        }        
       },
 
       close () {
@@ -240,7 +187,7 @@ data: () => ({
 
       save () {
         if (this.editedIndex > -1) {
-          axios.put(urlbase+"establecimiento/"+editedIndex, this.editedItem, {headers: getHeader()})
+          axios.put(urlbase+"establecimiento/"+this.editedItem.id, this.editedItem, {headers: getHeader()})
             .then((res)=> {
                 console.log(res)
 
